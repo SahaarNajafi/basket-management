@@ -1,0 +1,37 @@
+# Compiled class files
+*.class
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# Maven build folder
+target/
+
+# IDE configurations
+.idea/
+.vscode/
+.settings/
+.project
+.classpath
+*.iml
+*.iws
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Log files
+*.log
+*.log.*
+
+# Spring Boot H2 database files (if you ever run locally and persist)
+*.mv.db
+*.trace.db
+
+# Temporary/Backup files
+*.tmp
+*.bak
