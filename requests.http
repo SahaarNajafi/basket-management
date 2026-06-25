@@ -1,0 +1,62 @@
+### Basket Service API Testing Suite
+@host = http://localhost:8080
+
+### 1. List products and capture first product id
+# @name listProducts
+GET {{host}}/api/v1/products?page=0&size=20
+
+> {%
+    const body = response.body;
+    const firstProduct = Array.isArray(body) ? body[0] : body.content[0];
+
+    client.test("Product list is not empty", function () {
+        client.assert(firstProduct, "No product found in response");
+    });
+
+    client.global.set("productId", firstProduct.id);
+%}
+
+### 2. Get captured product
+GET {{host}}/api/v1/products/{{productId}}
+
+### 3. Create a basket and capture basket id
+# @name createBasket
+POST {{host}}/api/v1/baskets
+Content-Type: application/json
+
+{ "customerId": "customer-123" }
+
+> {%
+    client.test("Basket was created", function () {
+        client.assert(response.body.id, "Basket id is missing from response");
+    });
+
+    client.global.set("basketId", response.body.id);
+%}
+
+### 4. Add product to basket
+POST {{host}}/api/v1/baskets/{{basketId}}/items
+Content-Type: application/json
+
+{ "productId": "{{productId}}", "quantity": 2 }
+
+### 5. Update item quantity
+PUT {{host}}/api/v1/baskets/{{basketId}}/items/{{productId}}
+Content-Type: application/json
+
+{ "quantity": 3 }
+
+### 6. Remove item
+DELETE {{host}}/api/v1/baskets/{{basketId}}/items/{{productId}}
+
+### 7. Re-add the item so the basket is not empty at checkout
+POST {{host}}/api/v1/baskets/{{basketId}}/items
+Content-Type: application/json
+
+{ "productId": "{{productId}}", "quantity": 2 }
+
+### 8. Get basket
+GET {{host}}/api/v1/baskets/{{basketId}}
+
+### 9. Checkout
+POST {{host}}/api/v1/baskets/{{basketId}}/checkout
