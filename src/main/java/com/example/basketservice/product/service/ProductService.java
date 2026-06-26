@@ -1,10 +1,8 @@
 package com.example.basketservice.product.service;
 
 import com.example.basketservice.common.dto.PagedResponse;
-import com.example.basketservice.common.exception.InsufficientStockException;
 import com.example.basketservice.common.exception.ResourceNotFoundException;
 import com.example.basketservice.product.dto.ProductResponse;
-import com.example.basketservice.product.entity.Product;
 import com.example.basketservice.product.mapper.ProductMapper;
 import com.example.basketservice.product.repository.ProductRepository;
 import org.slf4j.Logger;

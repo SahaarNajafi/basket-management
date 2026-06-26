@@ -169,8 +169,8 @@ class BasketTest {
         @Test
         void removingAnAbsentLineFails() {
             Basket basket = new Basket("customer-1");
-
-            assertThatThrownBy(() -> basket.removeItem(UUID.randomUUID()))
+            UUID id = UUID.randomUUID();
+            assertThatThrownBy(() -> basket.removeItem(id))
                     .isInstanceOf(BasketItemNotFoundException.class);
         }
     }
